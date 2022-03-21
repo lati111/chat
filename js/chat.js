@@ -154,7 +154,12 @@ function sendMessage() {
 
 async function searchUser() {
     clearTimeout(timer)
-    if (document.getElementById("userSearch").value === "") {return}
+    if (document.getElementById("userSearch").value === "") {
+        const elements = document.getElementsByClassName("searchResult");
+        while(elements.length > 0){
+            elements[0].parentNode.removeChild(elements[0]);
+        } return;
+    }
     timer = setTimeout(async () => {
         let formData = new FormData();
         formData.append('searchTerm', document.getElementById("userSearch").value);

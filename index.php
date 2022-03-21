@@ -24,7 +24,7 @@ require_once __DIR__ . '/php/chat.php';
         <label id="userSearchContainer"><b>receiver ID:</b> <input type="number" id="targetID"></label>
         <div>
             <ul id="searchList">
-                <li><label><input id="userSearch" type="text" placeholder="zoek gebruiker..." onkeydown="searchUser()"></label></li>
+                <li><label><input id="userSearch" type="text" placeholder="zoek gebruiker..." onkeyup="searchUser()"></label></li>
             </ul>
 
         </div>
