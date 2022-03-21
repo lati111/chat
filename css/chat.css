@@ -72,3 +72,8 @@
     width: 100%;
     margin: auto;
 }
+
+#searchList li {
+    list-style-type: none;
+    margin: auto;
+}

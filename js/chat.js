@@ -27,14 +27,18 @@ async function getChats() {
             .then((response)=>response.json())
             .then((responseJson)=>{return responseJson});
 
-        const chat = document.createElement("li");
-        chat.classList.add("chat");
-        chat.textContent = profile["username"];
-        chat.id = "user_" + chats[i];
-        chat.setAttribute("data-ID", chats[i])
-        chat.addEventListener("click", loadChat, false);
-        document.getElementById("incomingChats").prepend(chat);
+        addChat(chats[i], profile["username"]);
     }
+}
+
+function addChat(userID, username) {
+    const chat = document.createElement("li");
+    chat.classList.add("chat");
+    chat.textContent = username;
+    chat.id = "user_" + userID;
+    chat.setAttribute("data-ID", userID)
+    chat.addEventListener("click", loadChat, false);
+    document.getElementById("incomingChats").prepend(chat);
 }
 
 function createMessage(messageID, messageText, datetime, sent = false) {
@@ -150,6 +154,7 @@ function sendMessage() {
 
 async function searchUser() {
     clearTimeout(timer)
+    if (document.getElementById("userSearch").value === "") {return}
     timer = setTimeout(async () => {
         let formData = new FormData();
         formData.append('searchTerm', document.getElementById("userSearch").value);
@@ -170,10 +175,25 @@ async function searchUser() {
             const result = document.createElement("li");
             result.textContent = results[i]["username"];
             result.setAttribute("data-ID", results[i]["ID"]);
-            // result.addEventListener("click", addUser, false);
+            result.addEventListener("click", addUser, false);
             result.classList.add("searchResult");
             document.getElementById("searchList").append(result);
         }
 
     }, 1000);
+}
+
+function addUser(e) {
+    const ID = e.target.getAttribute("data-ID");
+    const username = e.target.textContent;
+
+
+    if (document.getElementById("user_" + ID) === undefined) {
+        addChat(ID, username);
+    }
+
+    const elements = document.getElementsByClassName("searchResult");
+    while(elements.length > 0){
+        elements[0].parentNode.removeChild(elements[0]);
+    }
 }
